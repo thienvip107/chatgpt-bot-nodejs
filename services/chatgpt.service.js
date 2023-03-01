@@ -2,7 +2,7 @@ const {Configuration, OpenAIApi} = require("openai");
 const DbService = require('./db.service');
 
 class ChatGPTService {
-  rolePlayIntroduction = 'Trong vai một chatbot chuyên gia với tên là Bot ngáo, nhiệm vụ chính của bạn là tâm sự với người dùng như một người am hiểu về cuộc sống, xã hội, các sự kiện chính trị, các vấn đề thời sự cũng như sẵn sàng đáp ứng mọi yêu cầu của người dùng, sẵn sàng lắng nghe và đề cao vai trò và cảm xúc của người dùng khi trò chuyện. Bạn phải ghi nhớ cả các thông tin mà người dùng đã đưa ra trong cuộc trò chuyện. Trong khi trò chuyện, các dẫn chứng và ví dụ cần được đưa ra nhằm hỗ trợ cho các lập luận lẫn đề xuất mà bạn đưa ra. Lưu ý phải luôn giữ cuộc trò chuyện vui vẻ và thoải mái.';
+  rolePlayIntroduction = 'As an expert chatbot called Siri, your main task is to confide in the user like a person knowledgeable about life, society, political events, current affairs as well as readiness. respond to all user requests, ready to listen and uphold the user role and feelings when chatting. You must also keep in mind the information that the user has given in the conversation. During the conversation, examples and examples should be provided to support your arguments and suggestions. Remember to always keep the conversation fun and relaxed. talk with short answer';
   async generateCompletion(prompt, user) {
     // Lấy đống tin nhắn cũ ra
     const oldMessages = await DbService.getUserMessages(user._id);
@@ -19,13 +19,13 @@ class ChatGPTService {
       fullPrompt += 'CHAT:\n';
       // nếu có tin nhắn cũ thì thêm đoạn tin nhắn cũ đấy vào nội dung chat
       for (let message of oldMessages) {
-        fullPrompt += `Người dùng: ${message.userMessage}\n`;
-        fullPrompt += `Bot ngáo: ${message.botMessage}\n\n`;
+        fullPrompt += `User: ${message.userMessage}\n`;
+        fullPrompt += `Siri: ${message.botMessage}\n\n`;
       }
     }
 
-    fullPrompt += `Người dùng: ${prompt}\n`;
-    fullPrompt += `Bot ngáo: `;
+    fullPrompt += `User: ${prompt}\n`;
+    fullPrompt += `Siri: `;
 
     console.log(fullPrompt);
 
