@@ -23,6 +23,18 @@ class TelegramService {
       await DbService.clearUserMessages(user._id);
       return bot.sendMessage(chatId, 'Messages has been cleared');
     }
+    if (msg.text.includes('/topic')) {
+      // Xoá các tin nhắn cũ trong lịch sử
+      user.topic = chatMsg.slice(6);
+      await user.save()
+      return bot.sendMessage(chatId, user.topic);
+    }
+    if (msg.text === '/role') {
+      // Xoá các tin nhắn cũ trong lịch sử
+      user.role = chatMsg
+      await user.save()
+      return bot.sendMessage(chatId, user.role);
+    }
     const timer = new Date().getTime();
     // Trả lời tin nhắn dựa trên các tin nhắn cũ
     const responseMsg = await ChatGPTService.generateCompletion(chatMsg, user);
